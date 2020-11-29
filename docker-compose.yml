@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  promoqui_app:
+    build: .
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - promoqui_db
+    volumes:
+      - .:/var/www/html:cached
+      - ./utils/shell_history:/home/utente/shell_history
+    networks:
+      - promoqui_network
+    environment:
+      - HISTFILE=/home/utente/shell_history/.zsh_history
+  promoqui_db:
+    image: mysql:5.6.40
+    ports:
+      - 3307:3306
+    restart: always
+    volumes:
+      -  promoqui_volume:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - promoqui_network
+volumes:
+  promoqui_volume:
+networks:
+  promoqui_network:

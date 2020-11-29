@@ -1,0 +1,5 @@
+.idea/*
+utils/php/*
+utils/shell_history/*
+utils/errors.log
+vendor/*
